@@ -19,8 +19,6 @@ exports.create = async (req, res) => {
         const noTake = req.body.noTake;
         const userDets = req.body.userDets;
 
-        //console.log("Medication: " + medName, brandName, description, takeMethod, sideEffect, mg, activeIng, medType, tabDescrip, takenFor, treatment, userDets);
-
         console.log("test1");
         console.log(noTake);
 
@@ -49,22 +47,62 @@ exports.create = async (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    const medName = req.query.medName;
-    console.log("Buenos dias");
+
+    //console.log("med: " + req.query.medName + ", treat: " + req.query.treatment);
+
+    console.log(req.query[0]);
     console.log(req.query);
-    console.log(req);
-    //console.log(req.query.treatment);
-    var cond = medName ? { medName: { $regex: new RegExp(medName), $options: "i" } } : {};
-    Med.find(cond)
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occured while retrieving medications"
+    const medName = req.query.medName;
+    const treatment = req.query.treatment;
+
+    if(req.query.medName !== undefined) {
+        console.log("If for med search");
+
+        //const medName = req.query.medName;
+        console.log("Buenos dias");
+        var cond = medName ? { medName: { $regex: new RegExp(medName), $options: "i" } } : {};
+        Med.find(cond)
+            .then(data => {
+                res.send(data);
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occured while retrieving medications"
+                });
             });
-        });
+    }
+
+    if(req.query.treatment !== undefined) {
+        console.log("if for filter search");
+
+        //const treatment = req.query.treatment;
+        console.log("Buenos dias");
+        var cond = treatment ? { treatment: { $regex: new RegExp(treatment), $options: "i" } } : {};
+        Med.find(cond)
+            .then(data => {
+                res.send(data);
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occured while retrieving medications"
+                });
+            });
+    }
+
+    if(req.query.medName === undefined && req.query.treatment === undefined) {
+        Med.find()
+            .then(data => {
+                res.send(data);
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occured while retrieving medications"
+                });
+            });
+    }
 };
 
 exports.findOne = (req, res) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { VscChromeClose } from "react-icons/vsc";
@@ -8,24 +8,14 @@ import BootstrapNavbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
-//var isLogged = false;
-
 const handleLogout = () => {
     localStorage.clear();
-    //isLogged = false;
 };
 
 export default function Navbar() {
     const [show, setShow] = useState(false);
     const mClose = () => setShow(false);
     const mShow = () => setShow(true); 
-
-    /*useEffect(() => {
-        const loggedInUser = localStorage.getItem("user");
-        if (loggedInUser) {
-            isLogged = true;
-        }
-    }, []);*/
 
     return (
     <>
@@ -36,7 +26,7 @@ export default function Navbar() {
                     <Link to="/">
                         <p>Medapp</p>
                     </Link>
-                    <Offcanvas show={show} start className="side">
+                    <Offcanvas show={show} className="side">
                         <Offcanvas.Header>
                             <VscChromeClose className="cIcon" size="30" onClick={mClose}/>
                         </Offcanvas.Header>
@@ -55,6 +45,11 @@ export default function Navbar() {
                                     </Link>
                                 </li>
                                 <li>
+                                    <Link to="/filter" onClick={mClose}>
+                                        Filter
+                                    </Link>
+                                </li>
+                                <li>
                                     <Link to="/medicineinteraction" onClick={mClose}>
                                         Medication Interactions 
                                     </Link>
@@ -64,12 +59,6 @@ export default function Navbar() {
                                         User Profile
                                     </Link>
                                 </li>
-                            
-                            <li>
-                                <Link to="/login"  onClick={mClose}>
-                                    Login
-                                </Link>
-                            </li>
                             <li>
                                 <Link to="/login" onClick={function(event){ handleLogout(); mClose(); }}>
                                     <FiLogOut />

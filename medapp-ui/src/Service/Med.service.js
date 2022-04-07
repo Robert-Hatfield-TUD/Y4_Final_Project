@@ -16,11 +16,16 @@ const getByMedName = (medName) => {
     return http.get(`/meds?medName=${medName}`);
 }
 
+const getByTreatment = (treatment) => {
+    return http.get(`/meds?treatment=${treatment}`);
+}
+
 const MedService = {
     get,
     getAll,
     update,
-    getByMedName
+    getByMedName,
+    getByTreatment
 };
 
 export default MedService;

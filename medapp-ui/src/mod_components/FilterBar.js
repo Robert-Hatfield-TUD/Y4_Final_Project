@@ -2,20 +2,21 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
-import { AiOutlineSearch } from "react-icons/ai";
+import { BsFillFilterCircleFill } from "react-icons/bs";
 import Button from "react-bootstrap/esm/Button";
-import "../style/SearchBar.css"
+//import "../style/SearchBar.css"
 import MedService from "../Service/Med.service";
+import "../style/FilterBar.css";
 
-export default function Search() {
+export default function FilterBar() {
 
-    const [medName, setMedName] = useState("");
+    const [treatment, setTreatment] = useState("");
     const [searchRet, setSearchRet] = useState([]);
 
     const handleSubmit = async e => {
         e.preventDefault();
 
-        MedService.getByMedName(medName)
+        MedService.getByTreatment(treatment)
             .then((response) => {
                 fillSearch(response.data);
             })
@@ -26,8 +27,6 @@ export default function Search() {
 
     function fillSearch(response) {
         //console.log(response);
-
-        document.getElementById("seaSearch").innerHTML = "";
 
         //console.log(response.length);
         var searchReturn = [];
@@ -41,6 +40,7 @@ export default function Search() {
             temp1 = response[i].medName;
             temp2 = response[i].brandName;
             temp3 = response[i].id;
+            //console.log(temp1);
             
             searchReturn.push({ medName: temp1, brandName: temp2, id: temp3 });
         }
@@ -48,11 +48,6 @@ export default function Search() {
         //console.log("choose your poison: " + searchReturn[0].id);
 
         setSearchRet(searchReturn);
-        //console.log("results: " + searchReturn[0]);
-
-        if(searchReturn[0] === undefined) {
-            document.getElementById("seaSearch").innerHTML = "Sorry there are no results for your search.";
-        }
 
     }
 
@@ -61,7 +56,7 @@ export default function Search() {
             <Card style={{ width: '18rem' }} key={index}>
                 <Card.Body>
                     <Card.Title>
-                    <Link to={`/medicinepage/${card.id}`}>{card.medName}</Link>
+                    <Link to="/medicinepage">{card.medName}</Link>
                     </Card.Title>
                     <Card.Text id={card.id}>
                         {card.brandName}
@@ -73,25 +68,25 @@ export default function Search() {
 
     return (
         <>
-            <div className="seaDiv">
-                <h2 className="seaHed">Search</h2>
-                <h6>This search bar can be used to find any medication just from some of the letters included in it.</h6>
-                <Form className="sBar" onSubmit={handleSubmit}>
+            <div className="treDiv">
+                <h2 className="treHed">Filter</h2>
+                <h6>Please choose a filter for treatment</h6>
+                <Form className="tBar" onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicSearch">
-                        <Form.Control
-                            type="text"
-                            value={medName}
-                            placeholder="Search..."
-                            onChange={({ target }) => setMedName(target.value)}
-                            required
-                        />
+                        <Form.Control 
+                            as="select"
+                            onChange={({ target }) => setTreatment(target.value)}
+                        >
+                            <option value="pain">Pain</option>
+                            <option value="diabetes">Diabetes</option>
+                            <option value="indigestion">Indigestion</option>
+                        </Form.Control>
                     </Form.Group>
-                    <Button variant="primary" type="submit"><AiOutlineSearch /></Button>
+                    <Button variant="primary" type="submit">Filter <BsFillFilterCircleFill /></Button>
                 </Form>
             </div>
             <div className="seaDiv">
                 {searchRet.map(renderCard)}
-                <p id="seaSearch"></p>
             </div>
         </>
     )

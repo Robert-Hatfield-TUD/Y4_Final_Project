@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, HashRouter } from "react-router-dom";
 import Navbar from "./Navbar.js";
 import Errorp from "../pages/ErrorP.js";
 import Home from "../pages/Home.js";
@@ -9,6 +9,7 @@ import MedicinePage from "../pages/MedicinePage.js";
 import Register from "../pages/Register.js";
 import Search from "../pages/Search.js";
 import UserPage from "../pages/UserPage.js";
+import Filter from "../pages/Filter.js";
 
 export default function RoutesFor() {
 
@@ -17,13 +18,14 @@ export default function RoutesFor() {
             <Navbar />
             <Routes>
                 <Route path="/" element={<Home />}/>
-                <Route path="*" element={<Errorp />}/>
                 <Route path="/login" element={<Login />}/>
                 <Route path="/medicineinteraction" element={<MedicineInteraction />}/>
-                <Route path="/medicinepage" element={<MedicinePage />}/>
+                <Route path="/medicinepage/:id" element={<MedicinePage />}/>
                 <Route path="/register" element={<Register />}/>
                 <Route path="/search" element={<Search />}/>
                 <Route path="/userpage" element={<UserPage />}/>
+                <Route path="/filter" element={<Filter />}/>
+                <Route path="*" element={<Errorp />}/>
             </Routes>
         </Router>
     )

@@ -1,6 +1,10 @@
 // Page for compatibilty check
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import Form from "react-bootstrap/Card";
+import MedService from "../Service/Med.service.js";
+import MedicineInteractionCheck from "../mod_components/MedicineInteractionCheck.js";
+import "../style/MedicineInteraction.css";
 
 export default function MedicineInteractions() {
 
@@ -23,9 +27,14 @@ export default function MedicineInteractions() {
         else if(now.getTime() > item.expiry) {
             localStorage.removeItem("user");
         }
+
     }, []);
 
-    return(<>
-    <p>Hello this poage is medication interactions</p>
-    </>);
+    
+
+    return(
+    <>
+        <MedicineInteractionCheck />
+    </>
+    );
 }

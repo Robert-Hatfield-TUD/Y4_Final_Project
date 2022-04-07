@@ -1,9 +1,9 @@
 // Homepage
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import MedService from "../Service/Med.service";
 import "../style/Home.css";
-import Card from "react-bootstrap/Card";
+//import Card from "react-bootstrap/Card";
 
 
 export default function Home() {
@@ -14,13 +14,17 @@ export default function Home() {
     var divList = "";
     const [ medInf, setMedInf ] = useState("");
     const [visible, setVisible] = useState(false);
-    var loads = 0;
+
+    let id = useParams();
+    console.log(id);
+    id = "1234aa67";
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem("user");
         const item = JSON.parse(loggedInUser);
         const now = new Date();
 
+        console.log("UseEffect is running");
 
         //console.log(loggedInUser);
         if (loggedInUser) {
@@ -38,6 +42,7 @@ export default function Home() {
             .then((response) => {
                 //console.log(response.data)
                 medInfo = response.data;
+                console.log("Meds have loaded");
                 //console.log(medInfo);
                 //console.log(medInfo[0].medName);
                 //assignMeds(medInfo);
@@ -99,6 +104,7 @@ export default function Home() {
                 <button onClick={callCall}>See medications</button>
                 <div className="meds1" id="medLists">
                 </div>
+                <Link to={`/medicinepage/${id}`}>here we go</Link>
             </div>
         </>
     );

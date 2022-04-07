@@ -29,14 +29,12 @@ exports.create = async (req, res) => {
         // Checking that username is not in use
         const notUniqueUsername = await User.findOne({ username: username });
         if (notUniqueUsername) {
-            return("username already taken");
-            //return res.status(400).json({ error: "This username is already in use" });
+            return res.status(400).json({ error: "This username is already in use" });
         }
 
         // Checking that email is not in use
         const notUniqueEmail = await User.findOne({ email: email });
         if (notUniqueEmail) {
-            return("Email already in use");
             return res.status(400).json({ error: "This email is already in use" });
         }
 
@@ -58,20 +56,6 @@ exports.create = async (req, res) => {
             return res.status(200).json({ msg: "Added to database" });
         }
 
-        const token = jwt.sign(
-            {
-                userID: saveUser.id,
-            },
-            process.env.JWT
-        );
-
-        res
-            .cookie("token", token, {
-                sameSite: "none",
-                secure: true,
-                httpOnly: true,
-            })
-            .send();
     }
 
     catch (err) {
@@ -156,20 +140,6 @@ exports.login = async (req, res) => {
             return res.status(200).json(userlog);
         }
 
-        /*const token = jwt.sign(
-            {
-                userID: saveUser.id,
-            },
-            process.env.JWT
-        );
-
-        res
-            .cookie("token", token, {
-                sameSite: "none",
-                secure: true,
-                httpOnly: true,
-            })
-            .send();*/
     }
     catch (err) {
         console.log("Error: " + err);
