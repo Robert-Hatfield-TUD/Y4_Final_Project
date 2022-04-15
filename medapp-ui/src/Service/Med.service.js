@@ -9,7 +9,7 @@ const getAll = () => {
 };
 
 const update = (id, data) => {
-    return http.put(`/meds/${id}`, data);
+    return http.put(`/meds/update/${id}`, data);
 };
 
 const getByMedName = (medName) => {
@@ -20,12 +20,17 @@ const getByTreatment = (treatment) => {
     return http.get(`/meds?treatment=${treatment}`);
 }
 
+const getByPerscribed = (userDets) => {
+    return http.get(`/meds?userDets=${userDets}`);
+}
+
 const MedService = {
     get,
     getAll,
     update,
     getByMedName,
-    getByTreatment
+    getByTreatment,
+    getByPerscribed
 };
 
 export default MedService;

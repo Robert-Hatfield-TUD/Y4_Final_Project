@@ -1,0 +1,27 @@
+.sideMain {
+    background-color: #ededed;
+    margin-top: -1%;
+}
+
+.side {
+    background-color: #ededed;
+}
+
+.medTop {
+    padding-bottom: 1%;
+    padding-top: 1%;
+    width: 90%;
+    border-radius: 5px;
+}
+
+.medTop:hover {
+    background-color: white;
+}
+
+.linkList {
+    text-decoration: none;
+}
+
+h5 {
+    font-size: 1.5vw;
+}

@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import InputGroup from "react-bootstrap/InputGroup";
-import Container from "react-bootstrap/Container";
 import { Link, useNavigate } from "react-router-dom";
 import UserService from "../Service/UserService";
-import axios from "axios";
-import { VscMarkdown } from "react-icons/vsc";
 import "../style/Login.css";
 
 export default function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [user, setUser] = useState("");
     const nav = useNavigate();
 
     useEffect(() => {

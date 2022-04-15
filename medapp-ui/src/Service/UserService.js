@@ -20,6 +20,10 @@ const remove = (id) => {
     return http.delete(`/user/${id}`);
 };
 
+const getByEmail = (email) => {
+    return http.get(`/user?email=${email}`);
+}
+
 const login = (data) => {
     return http.post("/user/login/", data);
 };
@@ -40,7 +44,8 @@ const UserService = {
     remove,
     login,
     loggedIn,
-    logout
+    logout,
+    getByEmail
 };
 
 export default UserService;

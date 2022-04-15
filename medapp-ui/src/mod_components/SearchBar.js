@@ -4,6 +4,7 @@ import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import Button from "react-bootstrap/esm/Button";
+import PrescribeButton from "./PrescribeButton";
 import "../style/SearchBar.css"
 import MedService from "../Service/Med.service";
 
@@ -59,13 +60,14 @@ export default function Search() {
     const renderCard = (card, index) => {
         return(
             <Card style={{ width: '18rem' }} key={index}>
-                <Card.Body>
+                <Card.Body id={card.id}>
                     <Card.Title>
                     <Link to={`/medicinepage/${card.id}`}>{card.medName}</Link>
                     </Card.Title>
-                    <Card.Text id={card.id}>
+                    <Card.Text>
                         {card.brandName}
                     </Card.Text>
+                    <PrescribeButton id={card.id}/>
                 </Card.Body>
             </Card>
         );
@@ -73,6 +75,7 @@ export default function Search() {
 
     return (
         <>
+
             <div className="seaDiv">
                 <h2 className="seaHed">Search</h2>
                 <h6>This search bar can be used to find any medication just from some of the letters included in it.</h6>
@@ -93,6 +96,7 @@ export default function Search() {
                 {searchRet.map(renderCard)}
                 <p id="seaSearch"></p>
             </div>
+        
         </>
     )
 

@@ -1,9 +1,21 @@
+/*
+
+This file is the controller which handles the requests from the front-end and returns values
+to be displayed.
+
+Author: Robert Hatfield (C18475892)
+Date: 12/03/2022
+Compiler: Visual studio code
+
+*/
+
 const { meds } = require("../models");
 const db = require("../models");
 const Med = db.meds;
 
+// Creating a medication
 exports.create = async (req, res) => {
-
+    // Setting medication values
     try {
         const medName = req.body.medName;
         const brandName = req.body.brandName;
@@ -19,18 +31,13 @@ exports.create = async (req, res) => {
         const noTake = req.body.noTake;
         const userDets = req.body.userDets;
 
-        console.log("test1");
-        console.log(noTake);
-
         const addMed = new Med({medName, brandName, description, takeMethod, sideEffect, mg, activeIng, medType, tabDescrip, takenFor, treatment, noTake, userDets});
-        
-        console.log("test2");
 
+        // Saving medication
         const savedMed = await addMed.save();
 
-        console.log("test3");
+        // If for saving the medication
         if(!savedMed) {
-            console.log("test4");
             return res.status(400).json({ error: "Medication was not saved" });
         }
         else {
@@ -38,6 +45,7 @@ exports.create = async (req, res) => {
             return res.status(200).json({ msg: "Added to database" });
         }
     }
+    // Catch for the medication errors
     catch (err) {
         console.log("Error: " + err);
         console.log("Error on adding Medication");
@@ -46,21 +54,19 @@ exports.create = async (req, res) => {
     
 };
 
+// Finding the medications 
 exports.findAll = (req, res) => {
 
-    //console.log("med: " + req.query.medName + ", treat: " + req.query.treatment);
-
-    console.log(req.query[0]);
-    console.log(req.query);
     const medName = req.query.medName;
     const treatment = req.query.treatment;
+    const userDets = req.query.userDets;
 
+    // If which is done if there is a medName in the request
     if(req.query.medName !== undefined) {
-        console.log("If for med search");
-
-        //const medName = req.query.medName;
-        console.log("Buenos dias");
+        
+        // Condition used to find medications containing the requested value
         var cond = medName ? { medName: { $regex: new RegExp(medName), $options: "i" } } : {};
+
         Med.find(cond)
             .then(data => {
                 res.send(data);
@@ -73,11 +79,10 @@ exports.findAll = (req, res) => {
             });
     }
 
+    // If which is done if there is a treatment in the request
     if(req.query.treatment !== undefined) {
-        console.log("if for filter search");
-
-        //const treatment = req.query.treatment;
-        console.log("Buenos dias");
+    
+        // Condition used to find medications containing the requested value
         var cond = treatment ? { treatment: { $regex: new RegExp(treatment), $options: "i" } } : {};
         Med.find(cond)
             .then(data => {
@@ -91,7 +96,24 @@ exports.findAll = (req, res) => {
             });
     }
 
-    if(req.query.medName === undefined && req.query.treatment === undefined) {
+    // If which is done if there is a userDets in the request
+    if(req.query.userDets !== undefined) {
+
+        // Find to return the medications the user is prescribed to
+        Med.find({ userDets: req.query.userDets })
+            .then((response) => {
+                res.send(response);
+            })
+            .catch((err) => {
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occured while retrieving medications"
+                });
+            })
+    }
+
+    // If to return all medications if all values are empty
+    if(req.query.medName === undefined && req.query.treatment === undefined && req.query.userDets === undefined) {
         Med.find()
             .then(data => {
                 res.send(data);
@@ -105,14 +127,17 @@ exports.findAll = (req, res) => {
     }
 };
 
+// Finding medication by id
 exports.findOne = (req, res) => {
     Med.findById(req.params.id)
         .then((meds) => res.json(meds))
         .catch((err) => res.status(400).json("Error: " + err));
 };
 
+// Updating a medication
 exports.update = (req, res) => {
-    Med.findById(req.body.id)
+
+    Med.findById(req.params.id)
         .then((meds) => {
         meds.medName = req.body.medName;
         meds.brandName = req.body.brandName;
@@ -137,12 +162,14 @@ exports.update = (req, res) => {
         .catch((err) => res.status(400).json("Error: " + err));
 };
 
+// Deleting medication by id
 exports.delete = (req, res) => {
     Med.findByIdAndDelete(req.params.id)
         .then(() => res.json("Medication has been removed"))
         .catch((err) => res.status(400).json("Error: " + err));
 };
 
+// Searching for medication by medication name
 exports.seek = (req, res) => {
     const medName = req.query.medName;
     console.log(req.query.medName);

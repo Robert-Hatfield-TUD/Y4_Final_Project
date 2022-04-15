@@ -4,13 +4,14 @@ import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import { BsFillFilterCircleFill } from "react-icons/bs";
 import Button from "react-bootstrap/esm/Button";
+import PrescribeButton from "./PrescribeButton";
 //import "../style/SearchBar.css"
 import MedService from "../Service/Med.service";
 import "../style/FilterBar.css";
 
 export default function FilterBar() {
 
-    const [treatment, setTreatment] = useState("");
+    const [treatment, setTreatment] = useState("Pain");
     const [searchRet, setSearchRet] = useState([]);
 
     const handleSubmit = async e => {
@@ -45,8 +46,6 @@ export default function FilterBar() {
             searchReturn.push({ medName: temp1, brandName: temp2, id: temp3 });
         }
 
-        //console.log("choose your poison: " + searchReturn[0].id);
-
         setSearchRet(searchReturn);
 
     }
@@ -61,6 +60,7 @@ export default function FilterBar() {
                     <Card.Text id={card.id}>
                         {card.brandName}
                     </Card.Text>
+                    <PrescribeButton id={card.id}/>
                 </Card.Body>
             </Card>
         );
@@ -80,6 +80,8 @@ export default function FilterBar() {
                             <option value="pain">Pain</option>
                             <option value="diabetes">Diabetes</option>
                             <option value="indigestion">Indigestion</option>
+                            <option value="impotence">Impotence</option>
+                            <option value="lowers blood pressure">High blood pressure</option>
                         </Form.Control>
                     </Form.Group>
                     <Button variant="primary" type="submit">Filter <BsFillFilterCircleFill /></Button>
@@ -90,5 +92,4 @@ export default function FilterBar() {
             </div>
         </>
     )
-
 };

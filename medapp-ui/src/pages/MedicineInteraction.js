@@ -1,8 +1,6 @@
 // Page for compatibilty check
-import { Link, useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import Form from "react-bootstrap/Card";
-import MedService from "../Service/Med.service.js";
+import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import MedicineInteractionCheck from "../mod_components/MedicineInteractionCheck.js";
 import "../style/MedicineInteraction.css";
 
@@ -15,8 +13,6 @@ export default function MedicineInteractions() {
         const item = JSON.parse(loggedInUser);
         const now = new Date();
 
-
-        //console.log(loggedInUser);
         if (loggedInUser) {
             console.log("User already logged in!")
             nav("/medicineinteraction");
@@ -29,8 +25,6 @@ export default function MedicineInteractions() {
         }
 
     }, []);
-
-    
 
     return(
     <>

@@ -1,32 +1,22 @@
 // Homepage
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import Card from "react-bootstrap/Card";
+import CargGroup from "react-bootstrap/CardGroup";
 import MedService from "../Service/Med.service";
+import PrescribeButton from "../mod_components/PrescribeButton";
 import "../style/Home.css";
-//import Card from "react-bootstrap/Card";
-
 
 export default function Home() {
 
     const nav = useNavigate();
-    var medInfo;
-    var divEnter = "";
-    var divList = "";
-    const [ medInf, setMedInf ] = useState("");
-    const [visible, setVisible] = useState(false);
-
-    let id = useParams();
-    console.log(id);
-    id = "1234aa67";
+    const [medResult, setMedResult] = useState([]);
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem("user");
         const item = JSON.parse(loggedInUser);
         const now = new Date();
 
-        console.log("UseEffect is running");
-
-        //console.log(loggedInUser);
         if (loggedInUser) {
             console.log("User already logged in!")
             nav("/");
@@ -40,16 +30,7 @@ export default function Home() {
 
         MedService.getAll()
             .then((response) => {
-                //console.log(response.data)
-                medInfo = response.data;
-                console.log("Meds have loaded");
-                //console.log(medInfo);
-                //console.log(medInfo[0].medName);
-                //assignMeds(medInfo);
-                return(response.data);
-            })
-            .then((medInfo) => {
-                assignMeds(medInfo);
+                setMedResult(response.data);
             })
             .catch((err) => {
                 console.log("Error: " + err);
@@ -57,56 +38,31 @@ export default function Home() {
 
     }, []);
 
-    function assignMeds(medInformation) {
-        //console.log("Medical info: " + medInformation[0].medName);
-        //console.log(medInformation.length);
-        var i = 0;
-        //console.log(me)
-
-        //console.log("med list: " + medList);
-
-        for(i = 0;i < 2;i++) {
-            //console.log("Name: " + medInformation[i].medName); 
-
-            divEnter += '<div className="medList">' +
-                            '<p>Medication: ' + medInformation[i].medName + '</p>' +
-                            '<p>Brand: ' + medInformation[i].brandName + '</p>' +
-                            '<p>Medication Type: ' + medInformation[i].medType + '</p>' + 
-                        '</div>';
-        }
-
-        //console.log(divEnter);
-        divList = divEnter;
-        setMedInf(divList);
-        //console.log(medDiv);
-        //console.log("test2: " + medInf);
-
+    const renderCard = (card, index) => {
+        return(
+            <Card style={{ width: '18rem' }} key={index}>
+                <Card.Body>
+                    <Card.Title>
+                    <Link to={`/medicinepage/${card.id}`}>{card.medName}</Link>
+                    </Card.Title>
+                    <Card.Text id={card.id}>
+                        {card.brandName}
+                    </Card.Text>
+                    <PrescribeButton id={card.id}/>
+                </Card.Body>
+            </Card>
+        )
     }
-
-    function callCall() {
-        document.getElementById("medLists").innerHTML = medInf;
-        var x = document.getElementById("medLists");
-
-        if(visible === false) {
-            x.style.display = "block";
-            setVisible(true);
-        }
-        else if(visible === true) {
-            x.style.display = "none";
-            setVisible(false);
-        }
-    } 
 
     return (
         <>
-            <h2>Home</h2>
             <div className="homeHold">
-                <button onClick={callCall}>See medications</button>
-                <div className="meds1" id="medLists">
-                </div>
-                <Link to={`/medicinepage/${id}`}>here we go</Link>
+                <h2>Home</h2>
+                <br></br>
+                <CargGroup>
+                    {medResult.map(renderCard)}
+                </CargGroup>
             </div>
         </>
     );
-
 }

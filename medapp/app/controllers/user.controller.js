@@ -1,17 +1,24 @@
+/*
+
+This file has the exports for the database requests which handle the requests to the database.
+The user requests include funcitons such as creating a new user and verifying a users details.
+
+Author: Robert Hatfield (C18475892)
+Date: 12/03/2022
+Compiler: Visual studio code
+
+*/
+
+// Requires for the requests and encryption
 const db = require("../models");
 const User = db.user;
 const bcrypt = require("bcrypt");
 const { user } = require("../models");
-const passport = require("passport");
-const passStrat = require("passport-local");
-const jwt = require("jsonwebtoken");
-
-
 
 //Creating a new user
 exports.create = async (req, res) => {
     try {
-        //Validation
+        //Validation that all details have a value
         if(!req.body.username || !req.body.email || !req.body.password || !req.body.age) {
             res
                 .status(400)
@@ -19,12 +26,14 @@ exports.create = async (req, res) => {
             return;
         }
 
+        // Storing values for later use
         const username = req.body.username;
         const email = req.body.email;
         const password = req.body.password;
         const age = req.body.age;
 
-        console.log("Details: " + username, email, password, age);
+        // Test logging that details have been assigned correctly
+        //console.log("Details: " + username, email, password, age);
 
         // Checking that username is not in use
         const notUniqueUsername = await User.findOne({ username: username });
@@ -42,11 +51,13 @@ exports.create = async (req, res) => {
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        console.log("Salt: " + salt + " HPass: " + hashedPassword);
+        // Test logging for the encryption of the password
+        //console.log("Salt: " + salt + " HPass: " + hashedPassword);
 
         // Adding user
         const addUser = new User({ username, email, hashedPassword, age });
 
+        // Saving user to database
         const saveUser = await addUser.save();
         if (!saveUser) {
             return res.status(400).json({ error: "User was not saved" });
@@ -57,7 +68,7 @@ exports.create = async (req, res) => {
         }
 
     }
-
+    // Catch for error
     catch (err) {
         console.log("Error: " + err);
         console.log("Error on registration");
@@ -67,9 +78,39 @@ exports.create = async (req, res) => {
 
 //Get all users from database
 exports.findAll = (req, res) => {
-    User.find()
+
+    // Storing the value in variable
+    const email = req.query.email;
+
+    if(req.query.email !== undefined) {
+
+        // Test logging for valid value
+        //console.log(req.query.email);
+
+        // condition to find user by provided email 
+        var cond = email ? { email: { $regex: new RegExp(email), $options: "i" } } : {};
+
+        // Finding user by condition
+        User.find(cond)
+            .then(data => {
+                res.send(data);
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occured while retrieving user"
+                });
+            });
+    }
+
+    // If which returns all users 
+    if(req.query.email === undefined) {
+
+        User.find()
         .then((user) => res.json(user))
         .catch((err) => res.status(400).json("Error: " + err));
+    }
+
 };
 
 
@@ -80,7 +121,7 @@ exports.findOne = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
-//Update a user
+//Update a user ny their id
 exports.update = (req, res) => {
     User.findById(req.params.id)
     .then((user) => {
@@ -97,7 +138,7 @@ exports.update = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
-//Delete a user
+//Delete a user by their id
 exports.delete = (req, res) => {
     User.findByIdAndDelete(req.params.id)
     .then(() => res.json("User has been removed"))
@@ -110,12 +151,13 @@ exports.login = async (req, res) => {
 
         var userlog = "";
 
-        // Validation
+        // Validation to make sure values are not empty
         if (!req.body.email || !req.body.password) {
             res.status(400).send({ msg: "Please fill both fields for email and password" });
             return;
         }
 
+        // Storing values
         const email = req.body.email;
         const password = req.body.password;
 
@@ -133,6 +175,7 @@ exports.login = async (req, res) => {
             return;
         }
 
+        // If user details match return with success
         if(hasAccount && checkPassword) {
             console.log(email);
             userlog = email;
@@ -141,34 +184,9 @@ exports.login = async (req, res) => {
         }
 
     }
+    // Catch for login error
     catch (err) {
         console.log("Error: " + err);
         res.status(500).send();
-    }
-}
-
-exports.logout = (req, res) => {
-    res
-        .cookie("token", "", {
-            sameSite: "none",
-            secure: true,
-            httpOnly: true,
-            expires: new Date(0),
-        })
-        .send();
-}
-
-exports.loggedIn = (req, res) => {
-    // Check for user logged in
-    try {
-        const token = req.cookies.token;
-        if (!token) return res.json(false);
-
-        jwt.verify(token, process.env.JWT);
-
-        res.send(true);
-    }
-    catch (err) {
-        res.json(false);
     }
 }

@@ -89,21 +89,10 @@ export default function MedicineInteractionCheck () {
                 }
             }
         }
-
-
-        //console.log(checkValue);
-        //MedService.getByMedName
-    }
-
-    function checData(mName, aIng, nTake) {
-
     }
 
     const handleSubmit = async e => {
         e.preventDefault();
-
-        //console.log(firstCheck);
-        //console.log(secondCheck);
 
         showInteraction();
     }

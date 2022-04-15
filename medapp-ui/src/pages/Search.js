@@ -1,7 +1,6 @@
 // Search page
 import SearchBar from "../mod_components/SearchBar.js";
 import "../style/Search.css";
-import Card from "react-bootstrap/Card";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,10 +13,7 @@ export default function Search() {
         const item = JSON.parse(loggedInUser);
         const now = new Date();
 
-
-        //console.log(loggedInUser);
         if (loggedInUser) {
-            //console.log("User already logged in!")
             nav("/search");
         }
         else if(!loggedInUser) {
@@ -28,8 +24,6 @@ export default function Search() {
         }
 
     }, []);
-
-
 
     return (
     <>

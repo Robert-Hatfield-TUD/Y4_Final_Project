@@ -11,10 +11,7 @@ export default function Filter() {
         const item = JSON.parse(loggedInUser);
         const now = new Date();
 
-
-        //console.log(loggedInUser);
         if (loggedInUser) {
-            //console.log("User already logged in!")
             nav("/filter");
         }
         else if(!loggedInUser) {
@@ -25,7 +22,6 @@ export default function Filter() {
         }
 
     }, []);
-
 
     return(
         <>
