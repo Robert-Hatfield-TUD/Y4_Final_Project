@@ -1,4 +1,13 @@
-// User profile page
+/*
+This page is the user page which displays details about the current user logged in as well as their 
+list of prescribed medicaitons.
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+*/
+
+
 import UserService from "../Service/UserService";
 import Med from "../Service/Med.service";
 import { useEffect, useState } from "react";
@@ -20,7 +29,6 @@ export default function UserPage() {
         const item = JSON.parse(loggedInUser);
         const now = new Date();
 
-        //console.log(loggedInUser);
         if (loggedInUser) {
             console.log("User already logged in!")
             nav("/userpage");
@@ -34,14 +42,11 @@ export default function UserPage() {
 
         setTimeout(function() {
             var x = JSON.parse(localStorage.getItem("user"));
-            //console.log(x.value);
 
             var email = x.value;
-            //console.log(email);
 
             UserService.getByEmail(email)
                 .then((response) => {
-                    //console.log(response.data);
                     document.getElementById("username").innerHTML = response.data[0].username;
                     document.getElementById("age").innerHTML = response.data[0].age;
                 })

@@ -1,4 +1,11 @@
-// sign-up/register
+/*
+This is the registration page of the application which allows for a user to create an account for the 
+application and it alows the user to redirect to the login page if they already have an account.
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+*/
 import UserService from "../Service/UserService";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
@@ -19,8 +26,6 @@ export default function Register() {
         const item = JSON.parse(loggedInUser);
         const now = new Date();
 
-
-        //console.log(loggedInUser);
         if (loggedInUser) {
             console.log("User already logged in!")
             nav("/");
@@ -45,16 +50,13 @@ export default function Register() {
 
         UserService.create(data)
             .then((response) => {
-                console.log("User Created.")
-                console.log("Status: " + response.status);
-                console.log("Data: " + response.data);
+                //console.log("Data: " + response.data); For testing upon creation of user
                 alert("User created please log in to confirm");
                 nav("/login");
             })
             .catch((error) => {
                 console.log("Error: " + error);
             });
-
     }
     
     return(<>

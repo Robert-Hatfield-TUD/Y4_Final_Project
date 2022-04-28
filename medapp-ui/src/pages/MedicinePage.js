@@ -1,4 +1,12 @@
-//Page for each medication
+/*
+This page is to display the medication information of the selected medication to the user. The page will 
+get the medication details and then populate the page with it.
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+*/
+
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
@@ -27,7 +35,6 @@ export default function MedicinePage() {
         document.getElementById("sE").innerHTML = "";
         document.getElementById("medAvoid").innerHTML = "";
 
-        //console.log(loggedInUser);
         if (loggedInUser) {
             console.log("User already logged in!")
         }
@@ -40,7 +47,7 @@ export default function MedicinePage() {
 
         MedService.get(id)
         .then((response) => {
-            //console.log(response.data);
+            
             var resObj = response.data;
             setResultData(resObj);
             fillData(resObj);
@@ -52,7 +59,6 @@ export default function MedicinePage() {
     }, []);
 
     function fillData(obj) {
-        //console.log("Fill data: " + obj.sideEffect);
 
         document.getElementById("medName").innerHTML = obj.medName;
         document.getElementById("medBName").innerHTML = obj.brandName;

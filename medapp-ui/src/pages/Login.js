@@ -1,3 +1,12 @@
+/*
+This is the page for the login feature which is also can redirect the user to the registration page if
+need be.
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+*/
+
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -16,8 +25,6 @@ export default function Login() {
         const item = JSON.parse(loggedInUser);
         const now = new Date();
 
-
-        //console.log(loggedInUser);
         if (loggedInUser) {
             console.log("User already logged in!")
             nav("/");
@@ -51,8 +58,6 @@ export default function Login() {
                 console.log("Data: " + response.data);
                 user = JSON.stringify(response.data);
                 user = JSON.parse(user)
-                //setUser(user);
-                //localStorage.setItem('user', user);
                 setLocWithExpiration("user", user, 500);
                 console.log("server: " + response.data + ", Stringify: " + user);
                 nav("/");
@@ -100,7 +105,6 @@ export default function Login() {
                     </Form.Group>
                     <Button variant="primary" type="submit">Login</Button>
                 </Form>
-
                 <p>Don't have an account? <Link to="/register">Sign up here!!</Link></p>
             </div>
         </>

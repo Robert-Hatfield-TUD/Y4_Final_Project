@@ -1,8 +1,16 @@
+/*
+This is the page which returns the navigation bar which is displayed on each page of the application to
+allow for the user to navigate the application.
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+*/
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { VscChromeClose } from "react-icons/vsc";
-//import { MdAccountBox } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 import { BiHomeAlt, BiSearch, BiFilter } from "react-icons/bi";
 import { CgPill } from "react-icons/cg";

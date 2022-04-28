@@ -1,3 +1,11 @@
+/*
+This page acts as routing for the project so that each page display its respective elements.
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+*/
+
 import React from "react";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Navbar from "./Navbar.js";

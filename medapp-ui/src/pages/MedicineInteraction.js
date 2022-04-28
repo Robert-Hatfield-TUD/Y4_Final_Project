@@ -1,4 +1,13 @@
-// Page for compatibilty check
+/*
+This page is to display the medication interaction section of the application which holds the interaction
+checker component.
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+*/
+
+
 import { useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
 import MedicineInteractionCheck from "../mod_components/MedicineInteractionCheck.js";

@@ -1,3 +1,11 @@
+/*
+This page is the display for the filter page which displays the filter bar component.
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+*/
+
 import FilterBar from "../mod_components/FilterBar.js";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";

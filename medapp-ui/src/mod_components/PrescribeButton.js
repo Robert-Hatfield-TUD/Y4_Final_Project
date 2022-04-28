@@ -1,3 +1,12 @@
+/*
+This page is to add a prescription button to each searched medicaiton so that a user can add the medicaiton
+to their prescribed list from any of the points where medicaiton is displayed.
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+*/
+
 import React from "react";
 import Button from "react-bootstrap/Button";
 import { BsClipboard } from "react-icons/bs"
@@ -6,13 +15,9 @@ import Modal from "react-bootstrap/Modal";
 import { useState } from "react";
 
 function prescribe(id) {
-    //console.log(document.getElementById("reactButton").parentElement.id);
-
-    //var id = document.getElementById("reactButton").parentElement.id;
 
     MedService.get(id)
         .then((response) => {
-            //console.log(response.data);
 
             var x = JSON.parse(localStorage.getItem("user"));
             var email = x.value;
@@ -53,15 +58,13 @@ function prescribe(id) {
 
                 MedService.update(id, data)
                     .then((response) => {
-                        //console.log("User was saved");
-                        //console.log(response);
+                        //console.log(response); for error check on prescription update
                     })
                     .catch((err) => {
                         console.log("Error: " + err);
                     })
             }
             else if(prescribedYes === 0) {
-                //console.log("Not prescribed");
 
                 (medObj.userDets).push(email);
 
@@ -83,15 +86,12 @@ function prescribe(id) {
 
                 MedService.update(id, data)
                     .then((response) => {
-                        //console.log("User was saved");
-                        //console.log(response);
+                        //console.log(response); for error check on prescription update
                     })
                     .catch((err) => {
                         console.log("Error: " + err);
                     })
             }
-
-            //console.log(medObj.userDets);
         })
         .catch((err) => {
             console.log("Error: " + err);
@@ -104,8 +104,6 @@ export default function PrescribeButton(props) {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    //console.log(props.id);
 
     return(
         <>

@@ -1,4 +1,11 @@
-// Error page
+/*
+This is an error page that displays when the user navigates to a non-existent page which will 
+redirect the user to the home page after 10 seconds
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+*/
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";

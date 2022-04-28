@@ -1,3 +1,12 @@
+/*
+This section of the application handles the requests for the user which includes requests such as creating
+a user and logging in a user.
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+*/
+
 import http from "../http-common";
 
 const get = (id) => {
@@ -28,10 +37,6 @@ const login = (data) => {
     return http.post("/user/login/", data);
 };
 
-const loggedIn = () => {
-    return http.get("/user/loggedIn/");
-};
-
 const logout = () => {
     return http.get("/user/logout/");
 };
@@ -43,7 +48,6 @@ const UserService = {
     update,
     remove,
     login,
-    loggedIn,
     logout,
     getByEmail
 };

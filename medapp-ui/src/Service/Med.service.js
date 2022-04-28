@@ -1,3 +1,13 @@
+/*
+This is the service section of the application which allows for requests to be made among the ones
+below. The requests each handle something different such as getting all medications and getting a 
+single medication by its ID.
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+*/
+
 import http from "../http-common-med";
 
 const get = (id) => {

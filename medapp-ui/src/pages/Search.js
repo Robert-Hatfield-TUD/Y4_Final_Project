@@ -1,4 +1,10 @@
-// Search page
+/*
+This is the search page for the application which holds the search bar component.
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+*/
 import SearchBar from "../mod_components/SearchBar.js";
 import "../style/Search.css";
 import { useEffect } from "react";

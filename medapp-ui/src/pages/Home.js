@@ -1,4 +1,12 @@
-// Homepage
+/*
+This is the home page which is displayed to each user after they have logged into the application.
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+*/
+
+
 import { useNavigate, Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";

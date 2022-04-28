@@ -1,3 +1,12 @@
+/*
+This page is to show the interactions between two chosen medicaitons which checks to see if either the 
+name or active ingredient are included.
+
+Author: Robert Hatfield(C18475892)
+Date: 16/04/22
+Compiler: Visual Studio Code
+ */
+
 import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -15,16 +24,13 @@ export default function MedicineInteractionCheck () {
 
         MedService.getAll()
         .then((response) => {
-            //console.log(response.data)
+            
             setMedInfo(response.data);
-            //console.log("Meds have loaded");
-            //console.log(medInfo);
-            //console.log(medInfo[0].medName);
-            //assignMeds(medInfo);
+            
             return(response.data);
         })
         .then((medInfo) => {
-            //console.log(medInfo);
+            
             fillData(medInfo);
         })
         .catch((err) => {
@@ -50,7 +56,6 @@ export default function MedicineInteractionCheck () {
 
         }
 
-        //console.log(searchReturn);
         setCheckValue(searchReturn);
         setFirstCheck(searchReturn[0].medName);
         setSecondCheck(searchReturn[0].medName);
@@ -58,7 +63,6 @@ export default function MedicineInteractionCheck () {
     }
 
     function showInteraction() {
-        //console.log("Button works!!");
 
         document.getElementById("inter").innerHTML = "";
 
@@ -69,9 +73,8 @@ export default function MedicineInteractionCheck () {
 
         for(var i = 0;i < checkValue.length; i++) {
             if(firstCheck === checkValue[i].medName) {
-                //console.log("First Val: " + firstCheck + ", Second Val: " + checkValue[i].medName);
+                
                 mName = firstCheck.toLowerCase();
-                //console.log(mName);
                 aIng = checkValue[i].activeIng;
                 nTake = checkValue[i].noTake;
                 pos = i;
